@@ -1,10 +1,17 @@
 <template>
-  <div class="product">
+  <div
+    :class="{
+      'card':true,
+      'card_horizontally': horizontally
+    }"
+    >
     <img class="card__preview" :src="preview" alt="">
     <p class="card__name">{{ title }}</p>
     <p class="card__description">{{ description }}</p>
-    <p class="card__price">{{ price }}</p>
-    <Button class="card__button"></Button>
+    <div class="card__price">
+      <p>{{ price }}</p>
+      <Button title="+"/>
+    </div>
   </div>
 </template>
 <script>
@@ -30,6 +37,18 @@ export default {
     price: {
       type: String,
       default: ''
+    },
+    isBasket: {
+      type: Boolean,
+      default: false
+    },
+    horizontally: {
+      type: Boolean,
+      default: false
+    },
+    iconBut: {
+      type: String,
+      default: 'x'
     }
   },
   setup () {
@@ -37,55 +56,117 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.product {
-  position: relative;
-  display: block;
-  flex: 0 0 312px;
-  flex-direction: column;
-  margin: 35px 20px;
-  padding: 0;
-  height: 552px;
-  box-sizing: border-box;
+.card {
   border: 1px solid rgb(213, 140, 81);
-}
-.product:hover p {
+  display: flex;
+  flex-direction: column;
+
+  &_horizontally {
+    flex-direction: row;
+    border: none;
+    height: 122px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & .card__preview {
+      width: 122px;
+      height: 122px;
+      padding: 0;
+      margin: 0;
+    }
+    & .card__name {
+      height: 122px;
+      display: flex;
+      align-items: center;
+    }
+    & .card__description {
+      display: none;
+    }
+    & .card__price {
+      margin: 0;
+      width: 114px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgb(213, 140, 81);
+    }
+    & .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgb(213, 140, 81);
+      color: rgb(213, 140, 81);
+      border-radius: 50%;
+      cursor: pointer;
+      content: 'X';
+      }
+    & .button:hover {
+      background-color: rgb(213, 140, 81);
+      color: white;
+      }
+      :deep(button) {
+      transform: rotate(45deg);
+      border: 1px solid #D58C51;
+      color: #D58C51;
+
+      &:hover {
+        color: inherit;
+      }
+      }
+    }
+  }
+
+.card:hover p {
   color: rgb(213, 140, 81);
 }
 .card__preview{
-  position: absolute;
-  margin: 43px 21px 238px 21px;
+  display: block;
+  width: 90%;
+  padding: 43px 15px 30px 15px;
 }
 .card__name {
-  position: absolute;
+  height: 62px;
+  width: 288px;
   color: rgb(255, 255, 255);
   font-family: Montserrat;
-  font-weight: 500;
   font-size: 17px;
+  // font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0%;
   text-align: left;
-  margin: 345px 20px 186px 20px;
+  padding: 15px;
 }
 .card__description{
-  position: absolute;
+  height: 88px;
+  width: 288px;
   color: rgb(255, 255, 255);
   font-family: Montserrat;
-  font-weight: 400;
   font-size: 14px;
-  margin-top: 396px;
-  margin-left: 20px;
+  // font-weight: 300;
+  line-height: 17px;
+  letter-spacing: 0%;
+  text-align: left;
+  padding: 15px;
+  // margin-bottom: 0px;
 }
 .card__price{
-  position: absolute;
+  // position: absolute;
   color: rgb(255, 255, 255);
   font-family: Montserrat;
   font-size: 17px;
-  margin-top: 495px;
-  margin-left: 20px;
-}
-.card__button {
-  position: absolute;
+  // font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0%;
+  text-align: left;
+  flex-direction: row;
   display: flex;
-  justify-content: right;
-  align-items: end;
-  margin: 490px 25px 32px 257px;
+  justify-content: space-between;
+  padding: 15px;
+  // margin-top: 30px;
+  margin-bottom: 36px;
 }
 </style>

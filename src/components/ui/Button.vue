@@ -1,7 +1,5 @@
 <template>
-  <div class="button__position"><div class="button">
-    +
-  </div></div>
+ <button class="button">{{ title }}</button>
 </template>
 <script>
 export default {
@@ -9,6 +7,10 @@ export default {
   components: {
   },
   props: {
+    title: {
+      type: String,
+      default: '+'
+    }
   },
   setup () {
   }
@@ -25,6 +27,7 @@ export default {
   border: 1px solid #ffffff;
   color: #ffffff;
   border-radius: 50%;
+  cursor: pointer;
 }
 .button:hover {
   background-color: rgb(213, 140, 81);

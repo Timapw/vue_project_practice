@@ -21,4 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+:deep(.card){
+  width: 24%;
+}
 </style>

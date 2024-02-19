@@ -1,50 +1,62 @@
 <template>
-    <main class="container">
-      <div class=" container__card">
+    <main class="main">
+      <div :class="{
+        'container main__wrapper': true,
+        'main__wrapper_column': column,
+        'container__secandary': column
+      } ">
         <CardProduct
         :preview="require('@/assets/images/oysters.png')"
+        :horizontally="column"
         title="Устрицы по рокфеллеровски"
         description="Значимость этих проблем настолько очевидна, что укрепление и развитие структуры"
         price="2700 P"
-      />
+        />
       <CardProduct
         :preview="require('@/assets/images/ribs.png')"
+        :horizontally="column"
         title="Свиные ребрышки на гриле с зеленью"
         description="Не следует, однако забывать, что реализация намеченных плановых"
         price="1600 P"
       />
       <CardProduct
         :preview="require('@/assets/images/shrimps.png')"
+        :horizontally="column"
         title="Креветки по-королевски в лимонном соке"
         description="Значимость этих проблем настолько очевидна, что укрепление и развитие структуры обеспечивает широкому кругу"
         price="1820 P"
       />
       <CardProduct
         :preview="require('@/assets/images/oysters.png')"
+        :horizontally="column"
         title="Устрицы по рокфеллеровски"
         description="Значимость этих проблем настолько очевидна, что укрепление и развитие структуры"
         price="2700 P"
       />
       <CardProduct
         :preview="require('@/assets/images/oysters.png')"
+        :horizontally="column"
         title="Устрицы по рокфеллеровски"
         description="Значимость этих проблем настолько очевидна, что укрепление и развитие структуры"
         price="2700 P"
       />
       <CardProduct
         :preview="require('@/assets/images/ribs.png')"
+        :horizontally="column"
         title="Свиные ребрышки на гриле с зеленью"
         description="Не следует, однако забывать, что реализация намеченных плановых"
         price="1600 P"
       />
       <CardProduct
         :preview="require('@/assets/images/shrimps.png')"
+        :horizontally="column"
         title="Креветки по-королевски в лимонном соке"
         description="Значимость этих проблем настолько очевидна, что укрепление и развитие структуры обеспечивает широкому кругу"
         price="1820 P"
       />
       <CardProduct
         :preview="require('@/assets/images/oysters.png')"
+        :horizontally="column"
         title="Устрицы по рокфеллеровски"
         description="Значимость этих проблем настолько очевидна, что укрепление и развитие структуры"
         price="2700 P"
@@ -60,33 +72,35 @@ export default {
     CardProduct
   },
   props: {
+    minusHeight: {
+      type: String,
+      default: '184px'
+    },
+    column: {
+      type: Boolean,
+      default: false
+    }
   },
   setup () {
   }
 }
 </script>
 <style lang="scss" scoped>
-* {
-  margin: 0;
-  padding: 0;
-}
-  .container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgb(22, 21, 22);
-    height: 100%;
-    width: 100%;
+.main {
+  background: rgb(22, 21, 22);
+  height: calc(100vh - v-bind(minusHeight));
+  overflow: auto;
+ .card {
+  // width: 24%;
+ }
+  &__wrapper {
     display: flex;
     flex-wrap: wrap;
-  }
-  .container__card {
-    width: 1500px;
-    display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    margin-left: 35px;
-    margin-right: 35px;
+    gap: 35px 0;
+    &_column {
+      // flex-direction: column;
+    }
   }
+}
   </style>

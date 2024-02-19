@@ -1,11 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPage from '../views/MainPage.vue'
-
+import BasketPage from '../views/BasketPage'
 const routes = [
   {
     path: '/',
     name: 'home',
     component: MainPage
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: BasketPage
   }
 ]
 
