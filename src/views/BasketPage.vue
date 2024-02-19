@@ -5,18 +5,20 @@
     />
     <Main column
     minusHeight="288px"
+    :listArray="basket"
     />
     <hr>
     <footer>
       <div class="container__secandary">
          <p class="order__line">Заказ на сумму:</p>
-         <p class="order__sum">6220 Р</p>
+         <p class="order__sum">{{price}} ₽</p>
       <button>Оформить заказ</button>
     </div>
     </footer>
 </template>
 <script>
-
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import HeaderMain from '@/components/blocks/HeaderMain.vue'
 import Main from '@/components/blocks/Main.vue'
 export default {
@@ -26,8 +28,23 @@ export default {
     Main
   },
   props: {
+    listArray: {
+      type: Array,
+      default: () => {}
+    }
   },
   setup () {
+    const store = useStore()
+    const basket = computed(() => {
+      return store.getters.getBasketList
+    })
+    const price = computed(() => {
+      return store.getters.getAllPriceInBasket
+    })
+    return {
+      basket,
+      price
+    }
   }
 }
 

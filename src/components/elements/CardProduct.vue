@@ -9,7 +9,7 @@
     <p class="card__name">{{ title }}</p>
     <p class="card__description">{{ description }}</p>
     <div class="card__price">
-      <p>{{ price }}</p>
+      <p>{{price}}₽</p>
       <Button title="+"/>
     </div>
   </div>
