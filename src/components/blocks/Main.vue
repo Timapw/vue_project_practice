@@ -5,9 +5,16 @@
         'main__wrapper_column': column,
         'container__secandary': column
       } ">
-      <CardProduct :horizontally="column" v-for="(item, i) in  listArray " :key="i" :preview="item.img"
-        :title="item.title" :description="item.description" :price="item.price" />
-      </div>
+      <CardProduct
+      :horizontally="column"
+      v-for="(item, i) in  listArray "
+      :key="i" :preview="item.img"
+      :title="item.title"
+      :description="item.description"
+      :price="item.price"
+      @clickCard="$emit('clickCard', item)"
+      />
+      </div>x
     </main>
 </template>
 <script>
@@ -32,6 +39,12 @@ export default {
     }
   },
   setup () {
+    const clickCard = (id) => {
+      // console.log('Клик по кнопке добавления', id)
+    }
+    return {
+      clickCard
+    }
   }
 }
 </script>

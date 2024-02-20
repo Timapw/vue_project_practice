@@ -18,7 +18,7 @@
          v-if="!isBasket"
          style="text-decoration: none;"
          >
-        <div class="header__wrapper_basket"> 3 товара <br>на сумму 3500 Р <br/>
+        <div class="header__wrapper_basket"> {{count}} товара <br>на сумму {{ price.toLocaleString() }} ₽ <br/>
             <basketIcon />
         </div>
       </router-link>
@@ -30,6 +30,7 @@
 
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 import basketIcon from '@/components/icons/basketIcon.vue'
 import Button from '@/components/ui/Button.vue'
@@ -55,6 +56,7 @@ export default {
   },
   setup () {
     const store = useStore()
+    const router = useRouter()
 
     const count = computed(() => {
       return store.getters.getCountBasketProduct
@@ -64,7 +66,8 @@ export default {
     })
     return {
       count,
-      price
+      price,
+      router
     }
   }
 }

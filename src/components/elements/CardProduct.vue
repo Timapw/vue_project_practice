@@ -10,7 +10,7 @@
     <p class="card__description">{{ description }}</p>
     <div class="card__price">
       <p>{{price}}₽</p>
-      <Button title="+"/>
+      <Button title="+" @click.stop="$emit('clickCard')"/>
     </div>
   </div>
 </template>

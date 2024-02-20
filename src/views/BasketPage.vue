@@ -6,6 +6,7 @@
     <Main column
     minusHeight="288px"
     :listArray="basket"
+    @clickCard="clickCard"
     />
     <hr>
     <footer>
@@ -41,9 +42,14 @@ export default {
     const price = computed(() => {
       return store.getters.getAllPriceInBasket
     })
+    const clickCard = (item) => {
+      // console.log('Клик по карточке из корзины', id)
+      store.commit('SetBasketRemoveItem', item.idx)
+    }
     return {
       basket,
-      price
+      price,
+      clickCard
     }
   }
 }
