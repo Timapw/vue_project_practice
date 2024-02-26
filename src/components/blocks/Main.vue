@@ -3,18 +3,20 @@
       <div :class="{
         'container main__wrapper': true,
         'main__wrapper_column': column,
-        'container__secandary': column
+        'container__secondary': column
       } ">
       <CardProduct
       :horizontally="column"
       v-for="(item, i) in  listArray "
-      :key="i" :preview="item.img"
+      :key="i"
+      :preview="item.img"
+      :id="item.id"
       :title="item.title"
       :description="item.description"
       :price="item.price"
       @clickCard="$emit('clickCard', item)"
       />
-      </div>x
+      </div>
     </main>
 </template>
 <script>
@@ -62,7 +64,7 @@ export default {
     justify-content: space-between;
     gap: 35px 0;
     &_column {
-      // flex-direction: column;
+      flex-direction: column;
     }
   }
 }

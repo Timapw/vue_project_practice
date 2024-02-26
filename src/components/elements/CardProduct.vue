@@ -4,18 +4,20 @@
       'card':true,
       'card_horizontally': horizontally
     }"
+    @click="router.push(`/card/${id}`)"
     >
     <img class="card__preview" :src="preview" alt="">
     <p class="card__name">{{ title }}</p>
     <p class="card__description">{{ description }}</p>
     <div class="card__price">
-      <p>{{price}}₽</p>
+      <p>{{price.toLocaleString()}}₽</p>
       <Button title="+" @click.stop="$emit('clickCard')"/>
     </div>
   </div>
 </template>
 <script>
 import Button from '@/components/ui/Button.vue'
+import { useRouter } from 'vue-router'
 export default {
   name: 'CardProduct',
   components: {
@@ -25,6 +27,10 @@ export default {
     preview: {
       type: String,
       default: ''
+    },
+    id: {
+      type: Number,
+      default: 0
     },
     title: {
       type: String,
@@ -45,13 +51,13 @@ export default {
     horizontally: {
       type: Boolean,
       default: false
-    },
-    iconBut: {
-      type: String,
-      default: 'x'
     }
   },
   setup () {
+    const router = useRouter()
+    return {
+      router
+    }
   }
 }
 </script>
@@ -141,7 +147,7 @@ export default {
   padding: 15px;
 }
 .card__description{
-  height: 88px;
+  height: 68px;
   width: 288px;
   color: rgb(255, 255, 255);
   font-family: Montserrat;
@@ -152,6 +158,8 @@ export default {
   text-align: left;
   padding: 15px;
   // margin-bottom: 0px;
+  overflow-x:hidden;
+  overflow: hidden;
 }
 .card__price{
   // position: absolute;

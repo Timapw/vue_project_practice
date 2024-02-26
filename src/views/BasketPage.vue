@@ -10,9 +10,9 @@
     />
     <hr>
     <footer>
-      <div class="container__secandary">
+      <div class="container__secondary">
          <p class="order__line">Заказ на сумму:</p>
-         <p class="order__sum">{{price}} ₽</p>
+         <p class="order__sum">{{price.toLocaleString()}} ₽</p>
       <button>Оформить заказ</button>
     </div>
     </footer>
@@ -89,7 +89,7 @@ export default {
       border: 1px solid rgb(213, 140, 81);
       background-color: rgb(22, 21, 22);
      }
-     .container__secandary {
+     .container__secondary {
       position: relative;
       display: flex;
       justify-content: space-between;

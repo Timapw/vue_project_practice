@@ -2,18 +2,19 @@
   <header class="header">
     <div :class="{
       'container header__wrapper': true,
-      'container__secandary': smallContainer
+      'container__secondary': smallContainer
     }">
     <router-link
       to="/"
-      v-if="isBasket"
+      v-if="isBasket | isItem"
       style="text-decoration: none;"
     >
-    <Button title="←"/>
+    <Button title="←" @click="router.go(-1)" />
     </router-link>
-    <p v-if="!isBasket">Наша продукция</p>
-    <p v-else> Корзина с выбранными товарами</p>
-      <router-link
+    <p v-if="!isBasket & !isItem">НАША ПРОДУКЦИЯ</p>
+    <p v-else-if="isBasket">КОРЗИНА С ВЫБРАННЫМИ ТОВАРАМИ</p>
+    <p v-else-if="isItem"></p>
+      <div class="button__position"><router-link
          to="/about"
          v-if="!isBasket"
          style="text-decoration: none;"
@@ -22,6 +23,10 @@
             <basketIcon />
         </div>
       </router-link>
+      <router-link to="/auth">
+        <button class="exitBtn" @click.stop="router.go('/auth')">Выйти</button>
+      </router-link>
+      </div>
     </div>
   </header>
 </template>
@@ -52,6 +57,10 @@ export default {
     button: {
       type: String,
       default: ''
+    },
+    isItem: {
+      type: Boolean,
+      default: false
     }
   },
   setup () {
@@ -79,6 +88,7 @@ export default {
   &__wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
   color: rgb(255, 255, 255);
   font-family: Montserrat;
@@ -86,7 +96,7 @@ export default {
   font-weight: 700;
   line-height: 38px;
   letter-spacing: 0%;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   padding-top: 54px;
 }
   .header__wrapper_basket {
@@ -113,5 +123,23 @@ export default {
       color: rgb(213, 140, 81);
       border-radius: 50%;
       cursor: pointer;
+  }
+  .button__position {
+    display: flex;
+    justify-content: space-between;
+  }
+  .exitBtn {
+    padding: 12px 75px 13px 77px;
+    margin-left: 20px;
+    color: rgb(213, 140, 81);
+    background: none;
+    box-sizing: border-box;
+    border: 1px solid rgb(213, 140, 81);
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0%;
+    text-align: left;
   }
 </style>

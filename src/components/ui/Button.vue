@@ -1,5 +1,8 @@
 <template>
- <button class="button">{{ title }}</button>
+ <button :class="{
+      'button':true,
+      'button_item': item
+    }">{{ title }}</button>
 </template>
 <script>
 export default {
@@ -9,7 +12,11 @@ export default {
   props: {
     title: {
       type: String,
-      default: '+'
+      default: ''
+    },
+    item: {
+      type: Boolean,
+      default: false
     }
   },
   setup () {
@@ -28,6 +35,21 @@ export default {
   color: #ffffff;
   border-radius: 50%;
   cursor: pointer;
+  &_item {
+    width: 200px;
+    height: 42px;
+    content: 'В корзину';
+    background: rgb(213, 140, 81);
+    border-radius: 0;
+    color: rgb(19, 19, 19);
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0%;
+    text-align: left;
+    border: none;
+  }
 }
 .button:hover {
   background-color: rgb(213, 140, 81);

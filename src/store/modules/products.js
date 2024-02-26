@@ -6,32 +6,15 @@ export default {
     CountBasketProduct: 0,
     AllPriceInBasket: 0,
     ProductsList: products,
-    BasketList: [
-      // {
-      //   id: 1,
-      //   img: require('@/assets/images/oysters.png'),
-      //   title: 'Устрицы по рокфеллеровски',
-      //   price: 2700
-      // },
-      // {
-      //   id: 2,
-      //   img: require('@/assets/images/ribs.png'),
-      //   title: 'Свиные ребрышки на гриле с зеленью',
-      //   price: 1600
-      // },
-      // {
-      //   id: 3,
-      //   img: require('@/assets/images/shrimps.png'),
-      //   title: 'Креветки по-королевски в лимонном соке',
-      //   price: 1820
-      // }
-    ]
+    BasketList: [],
+    Product: null
   },
   getters: {
     getProductsList: state => state.ProductsList,
     getBasketList: state => state.BasketList,
     getCountBasketProduct: state => state.CountBasketProduct,
-    getAllPriceInBasket: state => state.AllPriceInBasket
+    getAllPriceInBasket: state => state.AllPriceInBasket,
+    getCardPage: state => state.Product
   },
   mutations: {
     SetBasketList (state, val) {
@@ -51,14 +34,14 @@ export default {
       state.CountBasketProduct = state.BasketList.length
       state.AllPriceInBasket = state.BasketList.reduce((prev, item) => {
         return prev + item.price
-      }, 0)
+      }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1')
     },
     SetStoreBasket (state, val) {
       state.BasketList = JSON.parse(localStorage.getItem('basket'))
       state.CountBasketProduct = state.BasketList.length
       state.AllPriceInBasket = state.BasketList.reduce((prev, item) => {
         return prev + item.price
-      }, 0)
+      }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1')
     },
     SetBasketRemoveItem (state, val) {
       state.BasketList = state.BasketList.filter(item => {
@@ -68,7 +51,12 @@ export default {
       state.CountBasketProduct = state.BasketList.length
       state.AllPriceInBasket = state.BasketList.reduce((prev, item) => {
         return prev + item.price
-      }, 0)
+      }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1')
+    },
+    SetCardPage (state, val) {
+      state.Product = state.ProductsList.find(element => {
+        return element.id === +val
+      })
     }
   },
   actions: {
