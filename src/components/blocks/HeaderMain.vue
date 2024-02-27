@@ -19,7 +19,7 @@
          v-if="!isBasket"
          style="text-decoration: none;"
          >
-        <div class="header__wrapper_basket"> {{count}} товара <br>на сумму {{ price.toLocaleString() }} ₽ <br/>
+        <div class="header__wrapper_basket"> {{count}} товара <br>на сумму {{price.toLocaleString()}} ₽ <br/>
             <basketIcon />
         </div>
       </router-link>
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'

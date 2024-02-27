@@ -14,14 +14,14 @@
             placeholder="Логин"
             v-model="loginValue"
         >
-        <span class="validate" v-if="isEmptyValueLogin|isEmptyValue">Поле не должно быть пустым</span>
+        <span class="validate">{{ loginError }}</span>
         <input
             class="input"
             type="text"
             placeholder="Пароль"
             v-model="passwordValue"
         >
-        <span class="validate" v-if="isEmptyValuePassword|isEmptyValue">Поле не должно быть пустым</span>
+        <span class="validate">{{ passwordError }}</span>
         <div class="checkbox" v-if="!isAuthToogle">
             <input class="checkbox__input" type="checkbox" id="checkbox"
             v-model="checkValue">
@@ -30,6 +30,7 @@
             </label>
         </div>
         <span class="validate" v-if="isErrorUsers">Логин или пароль неверен</span>
+        <span class="validate">{{ isErrorUsersInfo }}</span>
         <button @click.stop="clickForm">{{ buttonName }}</button>
         </form>
     </main>
@@ -51,15 +52,22 @@ export default {
     const toggleName = ref('Зарегестрироваться')
     const buttonName = ref('Войти')
     const isErrorUsers = ref(false)
-    const isEmptyValueLogin = ref(false)
-    const isEmptyValuePassword = ref(false)
-    const isEmptyValue = ref(false)
+    // const isEmptyValueLogin = ref(false)
+    // const isEmptyValuePassword = ref(false)
+    // const isEmptyValue = ref(false)
     const isAuthToogle = ref(true)
     const loginValue = ref('')
     const passwordValue = ref('')
     const checkValue = ref(false)
+    const isErrorUsersInfo = ref('')
+    const loginError = ref('')
+    const passwordError = ref('')
 
     const toggleForm = () => {
+      loginError.value = ''
+      passwordError.value = ''
+      isErrorUsersInfo.value = ''
+
       if (isAuthToogle.value) {
         title.value = 'Регистрация'
         toggleName.value = 'Авторизоваться'
@@ -69,6 +77,7 @@ export default {
         toggleName.value = 'Зарегистрироваться'
         buttonName.value = 'Войти'
       }
+      // isEmptyValueLogin.value = isEmptyValue.value = isErrorUsers.value = false
       isAuthToogle.value = !isAuthToogle.value
     }
     const clickForm = () => {
@@ -92,33 +101,84 @@ export default {
       }
     }
     const registration = () => {
-      const users = JSON.parse(localStorage.getItem('users'))
-      if (loginValue.value.trim().length === 0 && passwordValue.value.trim().length === 0) {
-        isEmptyValue.value = true
-      } else if (loginValue.value.trim().length === 0) {
-        isEmptyValueLogin.value = true
-      } else if (passwordValue.value.trim().length === 0) {
-        isEmptyValuePassword.value = true
-      } else {
-        users.push({
-          login: loginValue.value,
-          password: passwordValue.value
+      loginError.value = ''
+      passwordError.value = ''
+
+      if (loginValue.value.trim().length === 0) {
+        loginError.value = 'Поле не должно быть пустым'
+      } else if (loginValue.value.trim().length < 4) {
+        loginError.value = 'Логин должен содержать не менее 4-х символов'
+      }
+
+      if (passwordValue.value.trim().length === 0) {
+        passwordError.value = 'Поле не должно быть пустым'
+      } else if (passwordValue.value.trim().length < 4) {
+        passwordError.value = 'Пароль должен содержать не менее 4-х символов'
+      }
+
+      if (loginError.value.trim().length === 0 && passwordError.value.trim().length === 0) {
+        const users = JSON.parse(localStorage.getItem('users'))
+
+        const isCheckAuth = users.some(item => {
+          return item.login === loginValue.value
         })
-        localStorage.users = JSON.stringify(users)
+
+        if (!isCheckAuth) {
+          users.push({
+            login: loginValue.value,
+            password: passwordValue.value
+          })
+          isErrorUsersInfo.value = ''
+
+          localStorage.users = JSON.stringify(users)
+        } else {
+          isErrorUsersInfo.value = 'Логин уже занят'
+        }
       }
     }
+
+    // const users = JSON.parse(localStorage.getItem('users'))
+    // if (loginValue.value.trim().length === 0 && passwordValue.value.trim().length === 0) {
+    //   isEmptyValue.value = true
+    // } else if (loginValue.value.trim().length === 0) {
+    //   isEmptyValueLogin.value = true
+    // } else if (passwordValue.value.trim().length === 0) {
+    //   isEmptyValuePassword.value = true
+    // } else {
+
+    // const isCheckAuth = users.some(item => {
+    //   return item.login === loginValue.value
+    // })
+    // if (!isCheckAuth) {
+    //   users.push({
+    //     login: loginValue.value,
+    //     password: passwordValue.value
+    //   })
+    //   isErrorUsersInfo.value = ''
+    //   localStorage.users = JSON.stringify(users)
+    // } else {
+    //   isErrorUsersInfo.value = 'Логин уже занят'
+    // }
+    // users.push({
+    //   login: loginValue.value,
+    //   password: passwordValue.value
+    // })
+    // localStorage.users = JSON.stringify(users)
     return {
       title,
       toggleName,
       buttonName,
       isErrorUsers,
-      isEmptyValueLogin,
-      isEmptyValuePassword,
-      isEmptyValue,
+      // isEmptyValueLogin,
+      // isEmptyValuePassword,
+      // isEmptyValue,
       loginValue,
       passwordValue,
       isAuthToogle,
       checkValue,
+      isErrorUsersInfo,
+      loginError,
+      passwordError,
       toggleForm,
       clickForm
     }
@@ -217,5 +277,6 @@ button {
     line-height: 10px;
     letter-spacing: 0%;
     text-align: center;
+    margin-bottom: 8px;
 }
 </style>
